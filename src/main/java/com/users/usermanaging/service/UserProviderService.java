@@ -1,5 +1,7 @@
 package com.users.usermanaging.service;
 
+import com.users.usermanaging.dto.UserDTO;
+
 public interface UserProviderService {
-    String getUser(String id);
+    UserDTO getUser(String id);
 }

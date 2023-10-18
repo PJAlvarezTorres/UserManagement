@@ -1,6 +1,7 @@
 package com.users.usermanaging.service.implementation;
 
-import com.users.usermanaging.service.FeignUsersClient;
+import com.users.usermanaging.dto.UserDTO;
+import com.users.usermanaging.service.feign.FeignUsersClient;
 import com.users.usermanaging.service.UserProviderService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +16,7 @@ public class UserProviderServiceImpl implements UserProviderService {
 
     FeignUsersClient feignUsersClient;
     @Override
-    public String getUser(String id) {
+    public UserDTO getUser(String id) {
         return feignUsersClient.getUsers(id).getBody();
     }
 }

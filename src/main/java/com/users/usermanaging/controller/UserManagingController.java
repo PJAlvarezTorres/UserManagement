@@ -1,6 +1,7 @@
 package com.users.usermanaging.controller;
 
 import com.users.usermanaging.api.UsersApi;
+import com.users.usermanaging.api.dto.UsersRequest;
 import com.users.usermanaging.api.dto.UsersResponse;
 import com.users.usermanaging.model.UserEntity;
 import com.users.usermanaging.repository.UserRepository;
@@ -29,7 +30,7 @@ public class UserManagingController implements UsersApi {
     Logger logger = LoggerFactory.getLogger(UserManagingController.class);
 
     @Override
-    public ResponseEntity<UsersResponse> getUser(com.users.usermanaging.api.dto.UsersRequest usersRequest) {
+    public ResponseEntity<UsersResponse> getUser(UsersRequest usersRequest) {
         logger.info("Processing user with id {}", usersRequest.getIdUser());
         var user = userProviderService.getUser(String.valueOf(usersRequest.getIdUser()));
         UserEntity userEntity = UserEntity.builder()
@@ -37,6 +38,8 @@ public class UserManagingController implements UsersApi {
                 .build();
         userRepository.save(userEntity);
         UsersResponse usersResponse = new UsersResponse();
+        usersResponse.setId((long) user.getUser().getId());
+        usersResponse.setName(user.getUser().getFirst_name());
         return ResponseEntity.ok(usersResponse);
     }
 }
