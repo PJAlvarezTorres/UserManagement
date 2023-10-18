@@ -10,12 +10,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 @FeignClient(
              name = "users-service",
-             url = "https://myfakeapi.com/api",
+             url = "${endpoing.url.feign}",
              configuration = FeignConfig.class)
 public interface FeignUsersClient {
 
-
-    @GetMapping("users/{id}")
+    @GetMapping("${endpoing.url.feign.users}")
     ResponseEntity<UserDTO> getUsers(@PathVariable("id") String id);
 
 }
