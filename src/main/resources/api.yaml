@@ -1,0 +1,60 @@
+openapi: 3.0.0
+info:
+  title: Sample API
+  description: API Documentation for managing users MS
+  version: 1.0.0
+servers:
+  - url: '/user-management'
+    description: Optional server description, e.g. Main (production) server
+
+paths:
+  /users:
+    get:
+      summary: Returns a user by ID.
+      tags:
+        - users
+      operationId: getUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UsersRequest'
+      responses:
+        '200':
+          description: A user object.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UsersResponse'
+
+        '400':
+          description: The specified user ID is invalid (not a number).
+        '404':
+          description: A user with the specified ID was not found.
+        default:
+          description: Unexpected error
+
+components:
+  schemas:
+    UsersResponse:
+      title: Users Response
+      type: object
+      properties:
+        name:
+          type: string
+        id:
+          type: integer
+          format: int64
+      required:
+        - name
+        - id
+    UsersRequest:
+      title: Users Request
+      type: object
+      description: Users Request
+      properties:
+        idUser:
+          type: String
+          minLength: 1
+          maxLength: 10

@@ -1,0 +1,1 @@
+CREATE TABLE IF NOT EXISTS users (ID numeric,NAME varchar(255));
