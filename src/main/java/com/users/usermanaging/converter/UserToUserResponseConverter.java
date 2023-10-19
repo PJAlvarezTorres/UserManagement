@@ -1,6 +1,6 @@
 package com.users.usermanaging.converter;
 
-import com.users.usermanaging.api.dto.UsersResponse;
+import com.users.usermanaging.api.dto.UserResponse;
 import com.users.usermanaging.dto.UserDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -16,8 +16,8 @@ import org.mapstruct.ReportingPolicy;
 )
 public interface UserToUserResponseConverter {
 
-    @Mapping(target = "name", source = "userDTO.user.first_name", qualifiedByName = "setToUpperCase")
-    UsersResponse userToUserResponse(UserDTO userDTO);
+    @Mapping(target = "firstName", source = "userDTO.user.first_name", qualifiedByName = "setToUpperCase")
+    UserResponse userToUserResponse(UserDTO userDTO);
 
     @Named("setToUpperCase")
     default String setToUpperCase(String name) {

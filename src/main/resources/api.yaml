@@ -8,21 +8,42 @@ servers:
     description: Optional server description, e.g. Main (production) server
 
 paths:
-  /users:
+  /user:
     get:
       summary: Returns a user by ID.
       tags:
-        - users
+        - user
       operationId: getUser
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UsersRequest'
+              $ref: '#/components/schemas/UserRequest'
       responses:
         '200':
           description: A user object.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+
+        '400':
+          description: The specified user ID is invalid (not a number).
+        '404':
+          description: A user with the specified ID was not found.
+        default:
+          description: Unexpected error
+
+  /users:
+    get:
+      summary: Returns users list.
+      tags:
+        - users
+      operationId: getUsers
+      responses:
+        '200':
+          description: A users object.
           content:
             application/json:
               schema:
@@ -37,19 +58,30 @@ paths:
 
 components:
   schemas:
+
     UsersResponse:
       title: Users Response
       type: object
       properties:
-        name:
+        users:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserResponse'
+
+    UserResponse:
+      title: Users Response
+      type: object
+      properties:
+        first_name:
           type: string
         id:
           type: integer
           format: int64
       required:
-        - name
+        - first_name
         - id
-    UsersRequest:
+
+    UserRequest:
       title: Users Request
       type: object
       description: Users Request

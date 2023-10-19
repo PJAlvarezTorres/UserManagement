@@ -1,7 +1,7 @@
 package com.users.usermanaging.service.implementation;
 
-import com.users.usermanaging.controller.UserManagingController;
 import com.users.usermanaging.dto.UserDTO;
+import com.users.usermanaging.dto.UsersDTO;
 import com.users.usermanaging.service.UserProviderService;
 import com.users.usermanaging.service.feign.FeignUsersClient;
 import lombok.AccessLevel;
@@ -19,11 +19,16 @@ public class UserProviderServiceImpl implements UserProviderService {
 
     Logger logger = LoggerFactory.getLogger(UserProviderServiceImpl.class);
 
-
     FeignUsersClient feignUsersClient;
     @Override
-    public UserDTO getUser(String id) {
+    public UserDTO getUserById(String id) {
         logger.info("Getting info for id User {}", id);
-        return feignUsersClient.getUsers(id).getBody();
+        return feignUsersClient.getUserById(id).getBody();
+    }
+
+    @Override
+    public UsersDTO getUsers() {
+        logger.info("Getting info for users");
+        return feignUsersClient.getUsers().getBody();
     }
 }

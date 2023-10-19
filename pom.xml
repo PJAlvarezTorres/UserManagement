@@ -278,7 +278,7 @@
                             <inputSpec>${project.basedir}/src/main/resources/api.yaml</inputSpec>
                             <generatorName>spring</generatorName>
                             <library>spring-boot</library>
-                            <generateApiDocumentation>false</generateApiDocumentation>
+                            <generateApiDocumentation>true</generateApiDocumentation>
                             <generateApiTests>false</generateApiTests>
                             <generateSupportingFiles>true</generateSupportingFiles>
                             <configOptions>
