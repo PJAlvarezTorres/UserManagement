@@ -13,9 +13,6 @@ import com.users.usermanaging.converter.UserDtoToUserSystemResponse;
 import com.users.usermanaging.converter.UserSystemRequestToUserSystemDataDto;
 import com.users.usermanaging.converter.UserToUserResponseConverter;
 import com.users.usermanaging.converter.UsersDtoToUsersResponseConverter;
-import com.users.usermanaging.dto.UserSystemDTO;
-import com.users.usermanaging.dto.UserSystemDataDto;
-import com.users.usermanaging.dto.UsersDTO;
 import com.users.usermanaging.service.UserProviderService;
 import com.users.usermanaging.service.UserRepositoryService;
 import lombok.AccessLevel;
@@ -72,18 +69,19 @@ public class UserManagingController implements UsersApi, UserApi, AddUserApi {
     @Override
     public ResponseEntity<UserSystemResponse> addUser(UserSystemRequest userSystemRequest) {
         logger.info("Adding user with id {}", userSystemRequest.getId());
-        UserSystemDTO userSystemDto = userSystemRequestToUserSystemDataDto.convertToUserInfo(userSystemRequest);
-        UserSystemDataDto userSystemDataFinalDto = userProviderService.addUser(userSystemDto);
-        return ResponseEntity.ok(userDtoToUserSystemResponse.convertToUserSystemResponse(userSystemDataFinalDto));
+        return ResponseEntity.ok(userDtoToUserSystemResponse
+                .convertToUserSystemResponse(userProviderService
+                        .addUser(userSystemRequestToUserSystemDataDto
+                            .convertToUserInfo(userSystemRequest))));
     }
 
 
     @Override
     public ResponseEntity<UsersResponse> getUsers() {
-        logger.info("Processing uses");
-        UsersDTO usersDTO = userProviderService.getUsers();
+        logger.info("Processing users...");
         UsersResponse usersResponse = new UsersResponse();
-        usersResponse.setUsers(usersDtoToUsersResponseConverter.mapSourceListToTargetList(usersDTO.getUsers()));
+        usersResponse.setUsers(usersDtoToUsersResponseConverter
+                .mapSourceListToTargetList(userProviderService.getUsers().getUsers()));
         return ResponseEntity.ok(usersResponse);
     }
 
