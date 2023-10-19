@@ -2,6 +2,8 @@ package com.users.usermanaging.controller;
 
 import com.users.usermanaging.api.UserApi;
 import com.users.usermanaging.api.UsersApi;
+import com.users.usermanaging.api.AddUserApi;
+
 import com.users.usermanaging.api.dto.UserRequest;
 import com.users.usermanaging.api.dto.UserResponse;
 import com.users.usermanaging.api.dto.UsersResponse;
@@ -30,7 +32,7 @@ import java.util.Optional;
 @RequestMapping(value = "/getUsersInfo")
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class UserManagingController implements UsersApi, UserApi {
+public class UserManagingController implements UsersApi, UserApi, AddUserApi {
 
     UserProviderService userProviderService;
 
@@ -42,9 +44,7 @@ public class UserManagingController implements UsersApi, UserApi {
 
     UserRepositoryService userRepositoryService;
     Logger logger = LoggerFactory.getLogger(UserManagingController.class);
-
-
-
+    
     @Override
     public ResponseEntity<UserResponse> getUser(UserRequest userRequest) {
         logger.info("Processing user with id {}", userRequest.getIdUser());
@@ -59,6 +59,12 @@ public class UserManagingController implements UsersApi, UserApi {
     }
 
     @Override
+    public ResponseEntity<com.users.usermanaging.api.dto.UserSystemResponse> addUser() {
+        logger.info("Processing uses");
+        return null;
+    }
+
+    @Override
     public ResponseEntity<UsersResponse> getUsers() {
         logger.info("Processing uses");
         UsersDTO usersDTO = userProviderService.getUsers();
@@ -66,6 +72,7 @@ public class UserManagingController implements UsersApi, UserApi {
         usersResponse.setUsers(usersDtoToUsersResponseConverter.mapSourceListToTargetList(usersDTO.getUsers()));
         return ResponseEntity.ok(usersResponse);
     }
+
 
     @Override
     public Optional<NativeWebRequest> getRequest() {

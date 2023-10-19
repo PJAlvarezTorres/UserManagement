@@ -1,6 +1,7 @@
 package com.users.usermanaging.service.implementation;
 
 import com.users.usermanaging.dto.UserDTO;
+import com.users.usermanaging.dto.UserSystemDTO;
 import com.users.usermanaging.dto.UsersDTO;
 import com.users.usermanaging.service.UserProviderService;
 import com.users.usermanaging.service.feign.FeignUsersClient;
@@ -30,5 +31,10 @@ public class UserProviderServiceImpl implements UserProviderService {
     public UsersDTO getUsers() {
         logger.info("Getting info for users");
         return feignUsersClient.getUsers().getBody();
+    }
+
+    public UserSystemDTO addUserToSystem() {
+        logger.info("Add user to system");
+        return feignUsersClient.addUser().getBody();
     }
 }

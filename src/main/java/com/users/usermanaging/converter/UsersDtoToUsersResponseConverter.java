@@ -14,10 +14,8 @@ import java.util.List;
         unexpectedValueMappingException = Exception.class,
         nullValuePropertyMappingStrategy =  NullValuePropertyMappingStrategy.IGNORE)
 public interface UsersDtoToUsersResponseConverter {
-
     @Mapping(target = "firstName", source = "first_name")
     UserResponse convertToUserInfo(UserInfoDTO userInfoDTO);
-
     List<UserResponse> mapSourceListToTargetList(List<UserInfoDTO> sourceItemList);
 
 }
