@@ -1,7 +1,6 @@
 package com.users.usermanaging.converter;
 
 import com.users.usermanaging.api.dto.UserSystemResponse;
-import com.users.usermanaging.dto.UserSystemDTO;
 import com.users.usermanaging.dto.UserSystemDataDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.NullValuePropertyMappingStrategy;
