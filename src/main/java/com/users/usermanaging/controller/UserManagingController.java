@@ -1,15 +1,20 @@
 package com.users.usermanaging.controller;
 
+import com.users.usermanaging.api.AddUserApi;
 import com.users.usermanaging.api.UserApi;
 import com.users.usermanaging.api.UsersApi;
-import com.users.usermanaging.api.AddUserApi;
-
 import com.users.usermanaging.api.dto.UserRequest;
 import com.users.usermanaging.api.dto.UserResponse;
+import com.users.usermanaging.api.dto.UserSystemRequest;
+import com.users.usermanaging.api.dto.UserSystemResponse;
 import com.users.usermanaging.api.dto.UsersResponse;
 import com.users.usermanaging.converter.UserDtoToUserConverter;
+import com.users.usermanaging.converter.UserDtoToUserSystemResponse;
+import com.users.usermanaging.converter.UserSystemRequestToUserSystemDataDto;
 import com.users.usermanaging.converter.UserToUserResponseConverter;
 import com.users.usermanaging.converter.UsersDtoToUsersResponseConverter;
+import com.users.usermanaging.dto.UserSystemDTO;
+import com.users.usermanaging.dto.UserSystemDataDto;
 import com.users.usermanaging.dto.UsersDTO;
 import com.users.usermanaging.service.UserProviderService;
 import com.users.usermanaging.service.UserRepositoryService;
@@ -38,13 +43,17 @@ public class UserManagingController implements UsersApi, UserApi, AddUserApi {
 
     UserDtoToUserConverter userDtoToUserConverter;
 
+    UserSystemRequestToUserSystemDataDto userSystemRequestToUserSystemDataDto;
+
     UserToUserResponseConverter userToUserResponseConverter;
+
+    UserDtoToUserSystemResponse userDtoToUserSystemResponse;
 
     UsersDtoToUsersResponseConverter usersDtoToUsersResponseConverter;
 
     UserRepositoryService userRepositoryService;
     Logger logger = LoggerFactory.getLogger(UserManagingController.class);
-    
+
     @Override
     public ResponseEntity<UserResponse> getUser(UserRequest userRequest) {
         logger.info("Processing user with id {}", userRequest.getIdUser());
@@ -58,11 +67,16 @@ public class UserManagingController implements UsersApi, UserApi, AddUserApi {
                             userRequest.getIdUser())));
     }
 
+
+
     @Override
-    public ResponseEntity<com.users.usermanaging.api.dto.UserSystemResponse> addUser() {
-        logger.info("Processing uses");
-        return null;
+    public ResponseEntity<UserSystemResponse> addUser(UserSystemRequest userSystemRequest) {
+        logger.info("Adding user with id {}", userSystemRequest.getId());
+        UserSystemDTO userSystemDto = userSystemRequestToUserSystemDataDto.convertToUserInfo(userSystemRequest);
+        UserSystemDataDto userSystemDataFinalDto = userProviderService.addUser(userSystemDto);
+        return ResponseEntity.ok(userDtoToUserSystemResponse.convertToUserSystemResponse(userSystemDataFinalDto));
     }
+
 
     @Override
     public ResponseEntity<UsersResponse> getUsers() {

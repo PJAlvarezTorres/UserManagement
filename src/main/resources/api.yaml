@@ -62,6 +62,12 @@ paths:
       tags:
         - add user
       operationId: addUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserSystemRequest'
       responses:
         '200':
           description: A user System object.
@@ -83,18 +89,58 @@ components:
       title: User System Response
       type: object
       properties:
+        userData:
+          type: object
+          $ref: '#/components/schemas/UserSystemData'
+        createdAt:
+          type: string
+        updatedAt:
+          type: string
+      required:
+        - createdAt
+        - updatedAt
+
+    UserSystemData:
+      title: User System Data Response
+      type: object
+      properties:
+        id:
+          type: string
+        address:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserAddress'
+        phone:
+          type: string
+      required:
+        - id
+        - address
+        - phone
+
+    UserSystemRequest:
+      title: User System Request
+      type: object
+      properties:
         id:
           type: integer
           format: int64
         phone:
           type: string
         address:
-          type: object
-          $ref: '#/components/schemas/UserAddress'
+          type: array
+          items:
+            $ref: '#/components/schemas/UserAddress'
       required:
         - id
         - phone
-        - address
+    UserAddressData:
+      title: Users Response
+      type: object
+      properties:
+        users:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserAddress'
     UserAddress:
       title: User Address
       type: object
