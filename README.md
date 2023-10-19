@@ -15,6 +15,7 @@ Microservicio que se encarga del manejo básico de usuarios.
 -   Mapstruct
 -   Feign Client (Api externa, llamada a fake API)
 -   JPA/Crudrepository
+-   Openapi
 -   BBDD H2
 
 ## Operación "Extraer usuario".
